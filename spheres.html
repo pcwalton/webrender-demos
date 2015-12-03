@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>sphers</title>
+<title>spheres</title>
 <style>
 body {
     background: black;
@@ -19,7 +19,7 @@ canvas {
 .sphere {
     position: absolute;
     border-radius: 50%;
-    /*box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.2);*/
+    box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.2);
 }
 .ambient, .diffuse, .specular {
     position: absolute;
@@ -34,7 +34,7 @@ canvas {
     /*background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0));*/
 }
 .diffuse {
-    background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0));
+    /*background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0));*/
 }
 </style>
 </head>
@@ -45,7 +45,7 @@ var RINGS = 10;
 var NEAR_PLANE = 0.2;
 var FAR_PLANE = 5;
 var CIRCLE_RADIUS = 3;
-var SPHERE_COUNT = 800;
+var SPHERE_COUNT = 600;
 var AMBIENT_LIGHT = 0.2;
 var DIFFUSE_LIGHT = 0.6;
 var SPECULAR_LIGHT = 0.5;
@@ -461,6 +461,8 @@ var lastFrameCount = 0;
 var lastObjectAngle = objectAngle;
 var lastHeightAngle = heightAngle;
 
+var log = /Servo/.test(navigator.userAgent) ? alert : console.log.bind(console);
+
 function next() {
     var lightVector = computeLightVector(lightAngle);
     updateObjects(objectAngle, heightAngle, sphereElements);
@@ -477,7 +479,7 @@ function next() {
 
     lastFrameCount++;
     if (now >= lastFrameTime + 1000.0) {
-        //alert("*** " + lastFrameCount + " FPS");
+        log("*** " + lastFrameCount + " FPS");
         lastFrameTime = now;
         lastFrameCount = 0;
         lastObjectAngle = objectAngle;
