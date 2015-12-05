@@ -20,7 +20,7 @@ var RECT_MAX_SIZE = 25;
 var MIN_BORDER_RADIUS = 3;
 var MAX_BORDER_RADIUS = 16;
 var RECT_SPEED = 5;
-var RECT_COUNT = 700;
+var RECT_COUNT = 700; // 700
 function lerp(a, b, t) {
     return a + (b - a) * t;
 }
@@ -54,8 +54,7 @@ function placeRectAtEdge(element) {
             element.deltaX = -Math.random() * RECT_SPEED / 2;
         }
     }
-    /*
-    element.x = nextX;
+    /*element.x = nextX;
     nextX += element.size;
     element.y = nextY;
 
@@ -65,8 +64,7 @@ function placeRectAtEdge(element) {
     }
 
     element.deltaX = 0;
-    element.deltaY = 1;
-    */
+    element.deltaY = 1;*/
 }
 function rectIsOffScreen(element) {
     var right = element.x + element.size, bottom = element.y + element.size;
@@ -96,7 +94,8 @@ for (var i = 0; i < RECT_COUNT; i++) {
 
 //var frameLimit = 5;
 var lastFrameTime = Date.now();
-var lastFrameCount = 0;
+var lastRefTime = Date.now();
+var frameCount = 0;
 function update() {
     for (var i = 0; i < rects.length; i++) {
         var element = rects[i];
@@ -107,16 +106,19 @@ function update() {
         positionRect(element);
     }
 
-    lastFrameCount++;
+    frameCount++;
     var now = Date.now();
-    if (now >= lastFrameTime + 1000.0) {
-        console.log(lastFrameCount + " FPS");
-        lastFrameTime = now;
+    if (now >= lastRefTime + 1000.0) {
+        console.log(frameCount + " FPS");
+        lastRefTime = now;
+        frameCount = 0;
     }
 
     //frameLimit--;
     //if (frameLimit > 0)
-        setTimeout(update, 16);
+    setTimeout(update, Math.max((lastFrameTime + 16) - now, 0));
+
+    lastFrameTime = now;
 }
 update();
 </script>

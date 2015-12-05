@@ -3,11 +3,14 @@
 <head>
 <title>spheres</title>
 <style>
-body {
-    background: black;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 figure {
     position: absolute;
+    background: linear-gradient(to bottom, black, black 50%, #202020 60%, #505050);
+    margin: 0;
     top: 0;
     left: 0;
     right: 0;
@@ -19,7 +22,7 @@ canvas {
 .sphere {
     position: absolute;
     border-radius: 50%;
-    box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px 5px rgba(61, 178, 206, 0.2);
 }
 .ambient, .diffuse, .specular {
     position: absolute;
@@ -30,7 +33,7 @@ canvas {
     border-radius: 50%;
 }
 .ambient {
-    background: rgba(40, 40, 40, 1.0);
+    background: rgba(61, 178, 206, 1.0);
     /*background: linear-gradient(to bottom, white, rgba(0, 0, 0, 0));*/
 }
 .diffuse {
@@ -433,7 +436,7 @@ function sortObjects(sphereElements) {
         indices.push(i);
     }
     indices.sort(function(aIndex, bIndex) {
-        return sphereElements[bIndex].centerZ - sphereElements[aIndex].centerZ;
+        return -(sphereElements[bIndex].centerZ - sphereElements[aIndex].centerZ);
     });
     var figure = document.getElementsByTagName("figure")[0];
     while (figure.firstChild != null)
