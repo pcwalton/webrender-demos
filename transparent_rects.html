@@ -92,11 +92,10 @@ for (var i = 0; i < RECT_COUNT; i++) {
     rects.push(createRect());
 }
 
-//var frameLimit = 5;
-var lastFrameTime = Date.now();
-var lastRefTime = Date.now();
+var lastRefTime = 0;
 var frameCount = 0;
-function update() {
+
+function update(now) {
     for (var i = 0; i < rects.length; i++) {
         var element = rects[i];
         element.x += element.deltaX;
@@ -106,20 +105,19 @@ function update() {
         positionRect(element);
     }
 
+    if (lastRefTime==0)
+        lastRefTime=now;
     frameCount++;
-    var now = Date.now();
+
     if (now >= lastRefTime + 1000.0) {
         console.log(frameCount + " FPS");
         lastRefTime = now;
         frameCount = 0;
     }
 
-    //frameLimit--;
-    //if (frameLimit > 0)
-    setTimeout(update, Math.max((lastFrameTime + 16) - now, 0));
-
-    lastFrameTime = now;
+    window.requestAnimationFrame(update);
 }
-update();
+
+window.requestAnimationFrame(update);
 </script>
 
