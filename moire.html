@@ -196,7 +196,7 @@ var objectB = document.getElementById('object-b');
 makeCircles(objectA);
 makeCircles(objectB);
 
-var startTime = Date.now();
+var startTime = 0;
 
 function positionObject(object, x, y) {
     object.style.left = x + 'px';
@@ -250,15 +250,19 @@ function updateColorsOfObject(object, t) {
     }
 }
 
-function next() {
-    var now = Date.now();
+function next(now) {
+    if (startTime==0)
+        startTime=now;
     var t = (now - startTime) / 1600;
     updateOrbitingObject(objectA, t);
     updateLemniscateObject(objectB, t);
     updateBackgroundColor(t);
     updateColorsOfObject(objectA, t);
     updateColorsOfObject(objectB, t);
-    setTimeout(next, 16);
+    window.requestAnimationFrame(next);
 }
-next();</script>
+
+window.requestAnimationFrame(next);
+</script>
+</script>
 </html>

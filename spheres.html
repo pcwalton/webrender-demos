@@ -459,14 +459,14 @@ var lightAngle = 0.5;
 var objectAngle = 0, heightAngle = 0;
 var lightCount = 0;
 
-var lastFrameTime = Date.now();
+var lastFrameTime = 0;
 var lastFrameCount = 0;
 var lastObjectAngle = objectAngle;
 var lastHeightAngle = heightAngle;
 
 var log = /Servo/.test(navigator.userAgent) ? alert : console.log.bind(console);
 
-function next() {
+function next(now) {
     var lightVector = computeLightVector(lightAngle);
     updateObjects(objectAngle, heightAngle, sphereElements);
     sortObjects(sphereElements);
@@ -475,7 +475,8 @@ function next() {
         lightSpheres(lightAngle, sphereElements, diffuseElements, specularElements);
     lightCount = (lightCount + 1) % 5;*/
 
-    var now = Date.now();
+    if (lastFrameTime==0)
+        lastFrameTime=now;
     var idealFramesElapsed = (now - lastFrameTime) / 1000.0 * 60.0;
     objectAngle = lastObjectAngle + SPEED * idealFramesElapsed;
     heightAngle = lastHeightAngle + SPEED * idealFramesElapsed;
@@ -489,10 +490,10 @@ function next() {
         lastHeightAngle = heightAngle;
     }
 
-    setTimeout(next, 0); 
+    window.requestAnimationFrame(next);
 }
-next();
 
+window.requestAnimationFrame(next);
 </script>
 </body>
 </html>
